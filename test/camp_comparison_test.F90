@@ -47,7 +47,7 @@ program camp_comparison_test
   open( unit = file_unit, file = file_name, status = "replace",               &
         action = "write" )
   write( file_unit, * ) "time,H2O2,SO2,H2SO4,DMS,HNO3"
-  write( file_unit, * ) 0.0_r8,H2O2__molec_cm3, ",", SO2__molec_cm3, ",",     &
+  write( file_unit, * ) 0.0_r8,",",H2O2__molec_cm3, ",", SO2__molec_cm3, ",", &
                         H2SO4__molec_cm3, ",", DMS__molec_cm3, ",",           &
                         HNO3__molec_cm3
   do i_time_step = 1, number_of_time_steps
@@ -63,7 +63,7 @@ program camp_comparison_test
         H2SO4__molec_cm3, H2SO4__molec_cm3,                                   &
         DMS__molec_cm3,   DMS__molec_cm3,                                     &
         HNO3__molec_cm3,  HNO3__molec_cm3 )
-    write( file_unit, * ) i_time_step * time_step__s,                         &
+    write( file_unit, * ) i_time_step * time_step__s, ",",                    &
                           H2O2__molec_cm3, ",", SO2__molec_cm3, ",",          &
                           H2SO4__molec_cm3, ",", DMS__molec_cm3, ",",         &
                           HNO3__molec_cm3
