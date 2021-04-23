@@ -15,23 +15,24 @@ module trop_mam4_analytical
 
    use shr_kind_mod, only: r8 => shr_kind_r8
 
+   implicit none
+
    private
-   public :: solution
-   public :: set_rates
+   public :: advance_chemical_system
    real(r8), parameter :: k_b = 1.380649e-23 ! J/K, should be specified elsewhere
 
 contains
 
-   subroutine time_advance(time_step_seconds, temperature, pressure, &
-                           j_h2o2, &
-                           m, h2ovmr, &
-                           HO2, OH, NO3, &
-                           H2O2_t, H2O2_0, &
-                           SO2_t, SO2_0, &
-                           H2SO4_t, H2SO4_0, &
-                           DMS_t, DMS_0, &
-                           HNO3_t, HNO3_0 &
-                           )
+   subroutine advance_chemical_system(time_step_seconds, temperature, pressure, &
+                                      j_h2o2, &
+                                      m, h2ovmr, &
+                                      HO2, OH, NO3, &
+                                      H2O2_t, H2O2_0, &
+                                      SO2_t, SO2_0, &
+                                      H2SO4_t, H2SO4_0, &
+                                      DMS_t, DMS_0, &
+                                      HNO3_t, HNO3_0 &
+                                      )
       implicit none
 
 !-------------------------------------------------------
@@ -116,6 +117,6 @@ contains
                *exp(zeta*time_step_seconds) &
                - phi/zeta
 
-   end subroutine time_advance
+   end subroutine advance_chemical_system
 
 end module trop_mam4_analytical
