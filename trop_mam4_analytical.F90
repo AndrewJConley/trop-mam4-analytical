@@ -82,13 +82,14 @@ contains
 
       ! DMS
       ! d(DMS)/dt = gamma*DMS
-      gamma = -k(4)*initial_state%OH__molec_cm3_ - k(5)*initial_state%OH__molec_cm3_ - k(6)
+      gamma = -k(4)*initial_state%OH__molec_cm3_ - k(5)*initial_state%OH__molec_cm3_ - k(6)*initial_state%NO3__molec_cm3_
       final_state%DMS__molec_cm3_ = initial_state%DMS__molec_cm3_*exp(gamma*time_step_seconds)
 
       ! SO2
       alpha = -k(3)*initial_state%OH__molec_cm3_
-      beta = k(4) + 0.5*k(5)*initial_state%OH__molec_cm3_ + k(6)*initial_state%NO3__molec_cm3_
-      final_state%SO2__molec_cm3_ = initial_state%SO2__molec_cm3_ &
+      !beta = k(4)*initial_state%OH__molec_cm3_ + 0.5*k(5)*initial_state%OH__molec_cm3_ + k(6)*initial_state%NO3__molec_cm3_
+      beta = k(4)*initial_state%OH__molec_cm3_ + 1.0*k(5)*initial_state%OH__molec_cm3_ + k(6)*initial_state%NO3__molec_cm3_
+      final_state%SO2__molec_cm3_ = initial_state%SO2__molec_cm3_*exp(alpha*time_step_seconds) &
               + initial_state%DMS__molec_cm3_*beta*(exp(gamma*time_step_seconds) - &
                                                     exp(alpha*time_step_seconds)) &
                                                    /(gamma - alpha)
@@ -96,7 +97,7 @@ contains
       ! H2SO4
       kappa = k(3)*initial_state%OH__molec_cm3_
       final_state%H2SO4__molec_cm3_ = initial_state%H2SO4__molec_cm3_ &
-                + kappa*initial_state%SO2__molec_cm3_*time_step_seconds &
+                + kappa*initial_state%SO2__molec_cm3_*( (exp(alpha * time_step_seconds) - 1)/ alpha) &
                 + initial_state%DMS__molec_cm3_*(beta/(gamma - alpha)) &
                 *( &
                 (exp(gamma*time_step_seconds) - 1)/gamma &
@@ -104,7 +105,7 @@ contains
                 )
 
       ! HNO3
-      eta = k(6)*initial_state%OH__molec_cm3_
+      eta = k(6)*initial_state%NO3__molec_cm3_
       final_state%HNO3__molec_cm3_ = initial_state%HNO3__molec_cm3_ &
                + initial_state%DMS__molec_cm3_*eta*((exp(gamma*time_step_seconds) - 1)/gamma)
 
