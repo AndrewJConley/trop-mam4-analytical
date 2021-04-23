@@ -111,7 +111,17 @@ contains
         trim( to_string( state%DMS__molec_cm3_               ) )//","//       &
         trim( to_string( camp%get_state( camp_ids( DMS   ) ) ) )//","//       &
         trim( to_string( state%HNO3__molec_cm3_              ) )//","//       &
-        trim( to_string( camp%get_state( camp_ids( HNO3  ) ) ) )
+        trim( to_string( camp%get_state( camp_ids( HNO3  ) ) ) )//","//       &
+        trim( to_string( state%M__molec_cm3_                 ) )//","//       &
+        trim( to_string( camp%get_state( camp_ids( M     ) ) ) )//","//       &
+        trim( to_string( state%H2O__molec_cm3_               ) )//","//       &
+        trim( to_string( camp%get_state( camp_ids( H2O   ) ) ) )//","//       &
+        trim( to_string( state%HO2__molec_cm3_               ) )//","//       &
+        trim( to_string( camp%get_state( camp_ids( HO2   ) ) ) )//","//       &
+        trim( to_string( state%OH__molec_cm3_                ) )//","//       &
+        trim( to_string( camp%get_state( camp_ids( OH    ) ) ) )//","//       &
+        trim( to_string( state%NO3__molec_cm3_               ) )//","//       &
+        trim( to_string( camp%get_state( camp_ids( NO3   ) ) ) )
   end subroutine output_state
 
 end program camp_comparison_test
