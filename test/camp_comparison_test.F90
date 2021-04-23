@@ -16,7 +16,7 @@ program camp_comparison_test
   real(r8),         parameter       :: time_step__s = 60.0_r8
   integer,          parameter       :: number_of_time_steps = 60 * 24
   integer,          parameter       :: file_unit = 10
-  character(len=*), parameter       :: file_name = "out/analytic_solution.csv"
+  character(len=*), parameter       :: file_name = "out/output.csv"
   integer, parameter                :: M     = 1
   integer, parameter                :: H2O   = 2
   integer, parameter                :: HO2   = 3
