@@ -1,0 +1,147 @@
+{
+  "comments": [ "This mechanism may contain refactored reactions based on custom",
+                "rate constant functions in mo_usrrxt.F90 in the CAM source code.",
+                "As this file could change at any time, it is important that you",
+                "do an md5 checksum of mo_usrrxt.F90 from the version of CAM you",
+                "are using. The value should be: 9783938d6c5977f1c3603cadfe254987" ],
+  "pmc-data": [
+    {
+      "name": "MZ301_PP_TROP_MAM4_20210422",
+      "type": "MECHANISM",
+      "reactions": [
+        {
+          "type": "ARRHENIUS",
+          "A": 1.9e-13,
+          "Ea": 7.1793748E-21,
+          "reactants": {
+            "NO3": { },
+            "DMS": { }
+          },
+          "products": {
+            "SO2": { },
+            "HNO3": { }
+          }
+        },
+        {
+          "type": "ARRHENIUS",
+          "A": 3.0E-13,
+          "Ea": -6.3509854E-21,
+          "reactants": {
+            "HO2": { "qty": 2 }
+          },
+          "products": {
+            "H2O2": { },
+            "O2": { }
+          }
+        },
+        {
+          "type": "ARRHENIUS",
+          "A": 2.1E-33,
+          "Ea": -1.27019708E-20,
+          "reactants": {
+            "HO2": { "qty": 2 },
+            "M": { }
+          },
+          "products": {
+            "H2O2": { },
+            "O2": { },
+            "M": { }
+          }
+        },
+        {
+          "type": "ARRHENIUS",
+          "A": 4.2E-34,
+          "Ea": -3.67252634E-20,
+          "reactants": {
+            "HO2": { "qty": 2 },
+            "H2O": { }
+          },
+          "products": {
+            "H2O2": { },
+            "O2": { },
+            "H2O": { }
+          }
+        },
+        {
+          "type": "ARRHENIUS",
+          "A": 2.94E-54,
+          "Ea": -4.30762488E-20,
+          "reactants": {
+            "HO2": { "qty": 2 },
+            "M": { },
+            "H2O": { }
+          },
+          "products": {
+            "H2O2": { },
+            "O2": { },
+            "M": { },
+            "H2O": { }
+          }
+        },
+        {
+          "type": "TROE",
+          "k0_A": 3.57E-43,
+          "k0_C": 7810,
+          "kinf_A": 3.0909090909091E-12,
+          "kinf_C": 350,
+          "Fc": 1,
+          "reactants": {
+            "OH": { },
+            "DMS": { }
+          },
+          "products": {
+            "SO2": { "yield": 0.5 },
+            "HO2": { "yield": 0.5 }
+          }
+        },
+        {
+          "type": "PHOTOLYSIS",
+          "MUSICA name": "jh2o2",
+          "reactants": {
+            "H2O2": { }
+          },
+          "products": {
+            "OH": { "yield": 2 }
+          }
+        },
+        {
+          "type": "TROE",
+          "k0_A": 3.0E-31,
+          "k0_B": -3.3,
+          "kinf_A": 1.5E-12,
+          "reactants": {
+            "SO2": { },
+            "OH": { }
+          },
+          "products": {
+            "SO4": { }
+          }
+        },
+        {
+          "type": "ARRHENIUS",
+          "A": 1.8e-12,
+          "reactants": {
+            "OH": { },
+            "H2O2": { }
+          },
+          "products": {
+            "H2O": { },
+            "HO2": { }
+          }
+        },
+        {
+          "type": "ARRHENIUS",
+          "A": 9.6e-12,
+          "Ea": -3.23071866E-21,
+          "reactants": {
+            "OH": { },
+            "DMS": { }
+          },
+          "products": {
+            "SO2": { }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "pmc-data": [
+    {
+      "name": "O2",
+      "type": "CHEM_SPEC",
+      "tracer type" : "CONSTANT",
+      "description": "",
+      "molecular weight [kg mol-1]": 0
+    },
+    {
+      "name": "HNO3",
+      "type": "CHEM_SPEC",
+      "description": "nitric acid",
+      "molecular weight [kg mol-1]": 0.0630123
+    },
+    {
+      "name": "SO2",
+      "type": "CHEM_SPEC",
+      "description": "sulfur dioxide",
+      "molecular weight [kg mol-1]": 0.0640648
+    },
+    {
+      "name": "H2O",
+      "type": "CHEM_SPEC",
+      "description": "",
+      "molecular weight [kg mol-1]": 0.0180142
+    },
+    {
+      "name": "DMS",
+      "type": "CHEM_SPEC",
+      "description": "dimethyl sulfide",
+      "molecular weight [kg mol-1]": 0.0621324
+    },
+    {
+      "name": "H2O2",
+      "type": "CHEM_SPEC",
+      "description": "hydrogen peroxide",
+      "molecular weight [kg mol-1]": 0.0340136
+    },
+    {
+      "name": "HO2",
+      "type": "CHEM_SPEC",
+      "tracer type" : "CONSTANT",
+      "description": "hydroperoxyl radical",
+      "molecular weight [kg mol-1]": 0.0330062
+    },
+    {
+      "name": "NO3",
+      "type": "CHEM_SPEC",
+      "tracer type" : "CONSTANT",
+      "description": "nitrate radical",
+      "molecular weight [kg mol-1]": 0.0620049
+    },
+    {
+      "name": "OH",
+      "type": "CHEM_SPEC",
+      "tracer type" : "CONSTANT",
+      "description": "hydroxyl radical",
+      "molecular weight [kg mol-1]": 0.0170068
+    },
+    {
+      "name": "M",
+      "type": "CHEM_SPEC",
+      "tracer type" : "CONSTANT",
+      "description": "third-body species"
+    },
+    {
+      "type": "CHEM_SPEC",
+      "tracer type" : "CONSTANT",
+      "name": "N2"
+    },
+    {
+      "type": "CHEM_SPEC",
+      "name": "SO4"
+    }
+  ]
+}
