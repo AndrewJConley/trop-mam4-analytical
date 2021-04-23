@@ -90,7 +90,7 @@ contains
       alpha = -k(3)*OH
       beta = k(4) + 0.5*k(5)*OH + k(6)*NO3
       SO2_t = SO2_0 &
-              + DMS_0*beta*(exp(gamma*time_step_seconds) - exp(alpha*time_step_seconds) &
+              + DMS_0*beta*(exp(gamma*time_step_seconds) - exp(alpha*time_step_seconds)) &
                             /(gamma - alpha)
 
       ! H2SO4
