@@ -63,6 +63,8 @@ program camp_comparison_test
   camp_ids( HNO3  ) = camp%get_state_index( 'HNO3'  )
 
   call camp%set_environment( environment )
+  call camp%set_photolysis_rate_constant( 'jh2o2',                            &
+                                          photo_rate_constants%H2O2__s_ )
   call camp%set_state( camp_ids( M     ), initial_state%M__molec_cm3_     )
   call camp%set_state( camp_ids( H2O   ), initial_state%H2O__molec_cm3_   )
   call camp%set_state( camp_ids( HO2   ), initial_state%HO2__molec_cm3_   )
