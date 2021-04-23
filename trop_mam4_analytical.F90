@@ -18,13 +18,13 @@ module trop_mam4_analytical
    private
    public :: solution
    public :: set_rates
-   real(r8), parameter :: k_b = 1.380649e−23 ! J/K, should be specified elsewhere
+   real(r8), parameter :: k_b = 1.380649e-23 ! J/K, should be specified elsewhere
 
 contains
 
    subroutine time_advance(time_step_seconds, temperature, pressure, &
                            j_h2o2, &
-                           m, h2ovmr &
+                           m, h2ovmr, &
                            HO2, OH, NO3, &
                            H2O2_t, H2O2_0, &
                            SO2_t, SO2_0, &
@@ -38,7 +38,8 @@ contains
 !       ... dummy arguments
 !-------------------------------------------------------
       real(r8), intent(in)    :: time_step_seconds
-
+      real(r8), intent(in)    :: temperature            ! temperature (K)
+      real(r8), intent(in)    :: pressure               ! pressure (Pa)
       real(r8), intent(in)    :: j_h2o2                 ! photodecomp rate of H2O2 -> 2*OH
       real(r8), intent(in)    :: m                      ! number density of air (num / cc)
       real(r8), intent(in)    :: h2ovmr                 ! water vapor molar mixing ratio
@@ -84,7 +85,7 @@ contains
       ! DMS
       ! d(DMS)/dt = gamma*DMS
       gamma = -k(4)*OH - k(5)*OH - k(6)
-      DMS = DMS_0*exp(gamma*time_step_seconds)
+      DMS_t = DMS_0*exp(gamma*time_step_seconds)
 
       ! SO2
       alpha = -k(3)*OH
