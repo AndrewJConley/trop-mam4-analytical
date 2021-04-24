@@ -98,7 +98,7 @@ contains
       kappa = k(3)*initial_state%OH__molec_cm3_
       final_state%H2SO4__molec_cm3_ = initial_state%H2SO4__molec_cm3_ &
                 + kappa*initial_state%SO2__molec_cm3_*( (exp(alpha * time_step_seconds) - 1)/ alpha) &
-                + initial_state%DMS__molec_cm3_*(beta/(gamma - alpha)) &
+                + kappa*initial_state%DMS__molec_cm3_*(beta/(gamma - alpha)) &
                 *( &
                 (exp(gamma*time_step_seconds) - 1)/gamma &
                 - (exp(alpha*time_step_seconds) - 1)/alpha &
