@@ -87,8 +87,9 @@ contains
 
       ! SO2
       alpha = -k(3)*initial_state%OH__molec_cm3_
-      !beta = k(4)*initial_state%OH__molec_cm3_ + 0.5*k(5)*initial_state%OH__molec_cm3_ + k(6)*initial_state%NO3__molec_cm3_
-      beta = k(4)*initial_state%OH__molec_cm3_ + 1.0*k(5)*initial_state%OH__molec_cm3_ + k(6)*initial_state%NO3__molec_cm3_
+      beta = k(4)*initial_state%OH__molec_cm3_ + 0.5*k(5)*initial_state%OH__molec_cm3_ + k(6)*initial_state%NO3__molec_cm3_
+      !  if you want a sulfur-conserving mechanism
+      !  beta = k(4)*initial_state%OH__molec_cm3_ + 1.0*k(5)*initial_state%OH__molec_cm3_ + k(6)*initial_state%NO3__molec_cm3_
       final_state%SO2__molec_cm3_ = initial_state%SO2__molec_cm3_*exp(alpha*time_step_seconds) &
               + initial_state%DMS__molec_cm3_*beta*(exp(gamma*time_step_seconds) - &
                                                     exp(alpha*time_step_seconds)) &
