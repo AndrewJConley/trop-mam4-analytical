@@ -19,7 +19,7 @@ module camp
     type(camp_state_t),     pointer     :: state_
     type(chem_spec_data_t), pointer     :: chem_data_
     type(photo_updater_t),  allocatable :: photolysis_updaters_(:)
-    real(kind=dp)                       :: molec_cm3_to_ppm_ = 0.0
+    real(kind=dp)                       :: molec_cm3_to_ppm_ = 0.0 ! [ppm cm3 molec-1]
   contains
     procedure :: get_state_index
     procedure :: solve
@@ -90,9 +90,12 @@ contains
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   integer function get_state_index( this, species_name )
+    use pmc_util,                      only : assert_msg
     class(camp_t),    intent(inout) :: this
     character(len=*), intent(in)    :: species_name
     get_state_index = this%chem_data_%gas_state_id( species_name )
+    call assert_msg( 234416434, get_state_index .gt. 0, "Could not find "//   &
+                     "species '"//trim( species_name )//"'" )
   end function get_state_index
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -114,7 +117,7 @@ contains
     call this%state_%env_states(1)%set_pressure_Pa(                           &
            environment%pressure__Pa_   )
     this%molec_cm3_to_ppm_ = k_b * environment%temperature__K_                &
-                             / environment%pressure__Pa_ * 1e6
+                             / environment%pressure__Pa_ * 1e6 * 1e6
   end subroutine set_environment
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

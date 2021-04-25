@@ -31,7 +31,7 @@ contains
      class(chemical_state_t), intent(inout) :: this
      class(environment_t),    intent(in)    :: environment
      this%M__molec_cm3_ = environment%pressure__Pa_ &
-                          / ( k_b * environment%temperature__K_ )
+                          / ( k_b * environment%temperature__K_ ) * 1e-6
    end subroutine set_ideal_M
 
 end module chemical_state

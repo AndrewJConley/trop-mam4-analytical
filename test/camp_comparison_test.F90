@@ -58,7 +58,7 @@ program camp_comparison_test
   camp_ids( NO3   ) = camp%get_state_index( 'NO3'   )
   camp_ids( H2O2  ) = camp%get_state_index( 'H2O2'  )
   camp_ids( SO2   ) = camp%get_state_index( 'SO2'   )
-  camp_ids( H2SO4 ) = camp%get_state_index( 'H2SO4' )
+  camp_ids( H2SO4 ) = camp%get_state_index( 'SO4'   )
   camp_ids( DMS   ) = camp%get_state_index( 'DMS'   )
   camp_ids( HNO3  ) = camp%get_state_index( 'HNO3'  )
 
@@ -79,7 +79,8 @@ program camp_comparison_test
   open( unit = file_unit, file = file_name, status = "replace",               &
         action = "write" )
   write( file_unit, * ) "time,H2O2,H2O2_camp,SO2,SO2_camp,H2SO4,H2SO4_camp,"//&
-                        "DMS,DMS_camp,HNO3,HNO3_camp"
+                        "DMS,DMS_camp,HNO3,HNO3_camp,M,M_camp,H2O,H2O_camp,"//&
+                        "HO2,HO2_camp,OH,OH_camp,NO3,NO3_camp"
   call output_state( 0.0_r8, initial_state, camp, camp_ids )
   do i_time_step = 1, number_of_time_steps
     call advance_chemical_system( time_step__s, environment,                  &
