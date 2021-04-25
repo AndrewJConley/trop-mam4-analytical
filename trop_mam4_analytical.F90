@@ -52,7 +52,7 @@ contains
       k(0) = photo_rate_constants%H2O2__s_
 
       ko = 3.0e-13*exp(460./environment%temperature__K_)
-      kinf = 32.1e-33*initial_state%M__molec_cm3_*exp(920./environment%temperature__K_)
+      kinf = 2.1e-33*initial_state%M__molec_cm3_*exp(920./environment%temperature__K_)
       fc = 1 + 1.4e-12*initial_state%H2O__molec_cm3_*exp(2200./environment%temperature__K_)
       k(1) = (ko + kinf)*fc
 
@@ -62,12 +62,12 @@ contains
       ko = fc*initial_state%M__molec_cm3_/(1 + fc*initial_state%M__molec_cm3_/1.5e-12)
       k(3) = ko*.6**(1 + (log10(fc*initial_state%M__molec_cm3_/1.5e-12))**2)**(-1)
 
-      k(4) = 9.6e-12*exp(-3.23071866E-21/(k_b*environment%temperature__K_)) ! 9.6e-12_r8 * exp( -234._r8 * itemp)
+      k(4) = 9.6e-12*exp(3.23071866E-21/(k_b*environment%temperature__K_)) ! 9.6e-12_r8 * exp( -234._r8 * itemp)
 
       ko = 1._r8 + 5.5e-31_r8*exp(7460/environment%temperature__K_)*initial_state%M__molec_cm3_*0.21
       k(5) = 1.7e-42*exp(7810./environment%temperature__K_)*initial_state%M__molec_cm3_*0.21/ko
 
-      k(6) = 1.9e-13_r8*exp(7.1793748E-21/(k_b*environment%temperature__K_)) ! 1.9e-13_r8 * exp( 520._r8 * itemp)
+      k(6) = 1.9e-13_r8*exp(-7.1793748E-21/(k_b*environment%temperature__K_)) ! 1.9e-13_r8 * exp( 520._r8 * itemp)
 
 !-------------------------------------------------------
 !     Analytical Solution
