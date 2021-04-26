@@ -1,3 +1,33 @@
+!> \file
+!> Analytic solution for trop-mam4
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!> \mainpage trop-mam4 Analytic Solution
+!!
+!! The trop-mam4 gas-phase mechanism consists of 7 reactions:
+!!
+!! \f[
+!!   \ce{HO2 + hv  ->[k_0]}
+!! \f]\f[
+!!   \ce{HO2 + HO2 ->[k_1] H2O2}
+!! \f]\f[
+!!   \ce{H2O2 + OH ->[k_2] H2O + HO2}
+!! \f]\f[
+!!   \ce{SO2 + OH  ->[k_3] H2SO4}
+!! \f]\f[
+!!   \ce{DMS + OH  ->[k_4] SO2}
+!! \f]\f[
+!!   \ce{DMS + OH  ->[k_5]} 0.5 \ce{SO2 +} 0.5 \ce{HO2}
+!! \f]\f[
+!!   \ce{DMS + NO3 ->[k_6] SO2 + HNO3}
+!! \f]
+!!
+!! Here's the math:
+!! \f[
+!!  math here
+!! \f]
+
 module trop_mam4_analytical
 
 !-------------------------------------------------------
