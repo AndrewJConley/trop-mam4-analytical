@@ -89,6 +89,7 @@ program camp_comparison_test
     call camp%solve( time_step__s )
     call output_state( i_time_step * time_step__s, final_state, camp,         &
                        camp_ids )
+    call compare_states( final_state, camp, camp_ids )
     initial_state = final_state
   end do
   close( file_unit )
@@ -124,5 +125,31 @@ contains
         trim( to_string( state%NO3__molec_cm3_               ) )//","//       &
         trim( to_string( camp%get_state( camp_ids( NO3   ) ) ) )
   end subroutine output_state
+
+  subroutine compare_states( analytical_state, camp, camp_ids )
+    class(chemical_state_t), intent(in) :: analytical_state
+    class(camp_t),           intent(in) :: camp
+    integer,                 intent(in) :: camp_ids(:)
+    call compare_values( analytical_state%H2O2__molec_cm3_,                   &
+                         camp%get_state( camp_ids( H2O2  ) ), 'H2O2'  )
+    call compare_values( analytical_state%SO2__molec_cm3_,                    &
+                         camp%get_state( camp_ids( SO2   ) ), 'SO2'   )
+    call compare_values( analytical_state%H2SO4__molec_cm3_,                  &
+                         camp%get_state( camp_ids( H2SO4 ) ), 'H2SO4' )
+    call compare_values( analytical_state%DMS__molec_cm3_,                    &
+                         camp%get_state( camp_ids( DMS   ) ), 'DMS'   )
+    call compare_values( analytical_state%HNO3__molec_cm3_,                   &
+                         camp%get_state( camp_ids( HNO3  ) ), 'HNO3'  )
+  end subroutine compare_states
+
+  subroutine compare_values( a, b, label )
+    use pmc_util,                      only : assert_msg, almost_equal,       &
+                                              to_string
+    real(r8),     intent(in) :: a, b
+    character(*), intent(in) :: label
+    call assert_msg( 431278367, almost_equal( a, b, 5d-2, 1d5 ),             &
+                     "Different values for '"//trim( label )//"': "//         &
+                     trim( to_string( a ) )//" and "//trim( to_string( b ) ) )
+  end subroutine compare_values
 
 end program camp_comparison_test
