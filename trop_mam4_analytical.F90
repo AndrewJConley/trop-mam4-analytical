@@ -8,7 +8,7 @@
 !! The trop-mam4 gas-phase mechanism consists of 7 reactions:
 !!
 !! \f[
-!!   \ce{HO2 + hv  ->[k_0]}
+!!   \ce{H2O2 + hv  ->[k_0]}
 !! \f]\f[
 !!   \ce{HO2 + HO2 ->[k_1] H2O2}
 !! \f]\f[
@@ -18,30 +18,112 @@
 !! \f]\f[
 !!   \ce{DMS + OH  ->[k_4] SO2}
 !! \f]\f[
-!!   \ce{DMS + OH  ->[k_5]} 0.5 \ce{SO2 +} 0.5 \ce{HO2}
+!!   \ce{DMS + OH  ->[k_5]} 0.5 \, \ce{SO2 +} 0.5 \, \ce{HO2}
 !! \f]\f[
 !!   \ce{DMS + NO3 ->[k_6] SO2 + HNO3}
 !! \f]
+!! with the concentrations of the following chemicals are specified elsewhere and unprognosed by the gas-phase chemistry step.
+!! \f[ \ce{HO2, OH, NO3} \f]
+!! In this solution, we ignore the resulting tendency for water vapor, \f$ \ce{H2O} \f$ as well.
 !!
-!! Here's the math:
+!! Rate Constants
+!!---------------
+!! The rate constant \f$ k_0 \f$ is a time-evolving value specified by the model and considered to be a constant during the chemistry time step.
+!!
+!! The rate constant \f$ k_1 \f$ corresponds to a sum of Arrhenius reactions
+!! \f{eqnarray*}{
+!! k_{\alpha} &=& (3\cdot 10^{-13}) \cdot e^{460/T} \\
+!! k_{\beta} &=& (2 \cdot 10^{-33}) \cdot  \ce{M} e^{920/T} \\
+!! F &=& 1.4 + (2 \cdot 10^{21}) \cdot \ce{H2O} e^{2200/T} \\
+!! k_1 &=& (k_{\alpha} + k_{\beta}) \cdot F
+!! \f}
+!!
+!! The rate constant \f$ k_2 \f$ corresponds to an Arrhenius reactions
 !! \f[
-!!  math here
+!! k_2 = 1.8 \cdot 10^{-12}
 !! \f]
+!!
+!! The rate constant \f$ k_3 \f$ corresponds to a Troe reaction
+!! \f{eqnarray*}{
+!! f_c &=& (3\cdot 10^{-31}) \left({\frac{300}{T}}\right)^{3.3} \\
+!! f_1 &=& \frac{f_c  \cdot  \ce{M} }{ (1 + f_c \ce{M} / (1.5 \cdot 10^{-12}))}\\
+!! e_{fac} &=& \left({\mbox{log}_{10}(f_c \cdot \ce{M}/{(1.5 \cdot 10^{-12})}}\right)^{2} \\
+!! k_3 &=& f_1 \cdot (0.6)^{ \left(1 + {e_{fac}}^{2}   \right)^{-1}  }
+!! \f}
+!! 
+!! The rate constant \f$ k_4 \f$ corresponds to an Arrhenius reaction
+!! \f[
+!! k_4 = (9.6\cdot 10^{-12}) \cdot e^{(3.23071866\cdot 10^{-21})/(k_b T)}
+!! \f]
+!!
+!! The rate constant \f$ k_5 \f$ is specfied as follows
+!! \f{eqnarray*}{
+!! k_{high} &=& 1 + (5.5 \cdot 10^{-31}) \cdot e^{7460/T} \cdot \ce{M} (0.21) \\
+!! k_5 &=& (1.7\cdot 10^{-42}) \cdot e^{(7810/T)} \cdot \ce{M} (0.21) / k_{high}
+!! \f}
+!!
+!! The rate constant \f$ k_6 \f$ is a typical Arrhenius reaction
+!!\f[
+!! k_6 = (1.9\cdot 10^{-13}) \cdot e^{(-7.1793748 \cdot 10^{-21} / (k_b T) )}
+!!\f]
+!!
+!! Solution
+!!---------
+!! The solution of the resulting differential equations can be solved analytically.  In each of the following expressions, the greek variables are constants.
+!!
+!! DMS
+!!----
+!! The time evolution of \f$ \ce{DMS}\f$ is governed by the differential equation
+!! \f{eqnarray*}{
+!! \frac{d \, \ce{DMS}} {dt} &=& \gamma \ce{DMS} \\
+!! \gamma &=& -k_4 \ce{OH} -k_5 \ce{OH} -k_6 \ce{NO3} \\
+!! \rightarrow \ce{DMS} (t) &=& \ce{DMS}(0) \,\, e^{\gamma t}
+!! \f}
+!!
+!! HNO3
+!!----
+!! The time evolution of \f$ \ce{HNO3}\f$ is governed by the differential equation
+!! \f{eqnarray*}{
+!! \frac{d \, \ce{HNO3}} {dt} &=& \eta \,\ce{DMS} \\
+!! \eta &=& k_6 \ce{NO3} \\
+!! \rightarrow \ce{HNO3} (t) &=& \ce{HNO3}(0) + \frac{\eta \, \ce{DMS}(0) }{\gamma} \left( e^{\gamma t} - 1 \right) \\
+!! \f}
+!!
+!! SO2
+!!----
+!! The time evolution of \f$ \ce{SO2}\f$ is governed by the differential equation
+!! \f{eqnarray*}{
+!! \frac{d \, \ce{SO2}} {dt} &=& \alpha \, \ce{SO2} + \beta \, \ce{DMS} \\
+!! \alpha &=& -k_3 \ce{OH} \\
+!! \beta &=& k_4 \ce{OH} + 0.5 \, k_5 \ce{OH} + k_6 \ce {NO3} \\
+!! \rightarrow \ce{SO2} (t) &=& \ce{SO2}(0)\, e^{\alpha t} + \frac{\beta} {\gamma-\alpha} \ce{DMS}(0) \left( e^{\gamma t} - e^{\alpha t} \right) \\
+!! \f}
+!!
+!! H2SO4
+!!----
+!! The time evolution of \f$ \ce{H2SO4}\f$ is governed by the differential equation
+!! \f{eqnarray*}{
+!! \frac{d \, \ce{H2SO4}} {dt} &=& \kappa \, \ce{SO2} \\
+!! &=& \kappa \, \left( \ce{SO2}(0)\, e^{\alpha t} + \frac{\beta} {\gamma-\alpha} \ce{DMS}(0) \left( e^{\gamma t} - e^{\alpha t} \right)   \right) \\
+!! \kappa &=& k_3 \ce{OH} \\
+!! \rightarrow \ce{H2SO4} (t) &=& \ce{H2SO4}(0)  \\
+!!     && + \kappa \, \ce{SO2}(0) \left( \frac{e^{\alpha t}-1}{\alpha}  \right) \\
+!!     && + \kappa \frac{\beta}{\gamma - \alpha} \ce{DMS}(0) \left( \frac{e^{\gamma t} -1}{\gamma} - \frac{e^{\alpha t}-1}{\alpha}    \right) 
+!! \f}
+!!
+!! H2O2
+!!----
+!! The time evolution of \f$ \ce{H2O2}\f$ is governed by the differential equation
+!! \f{eqnarray*}{
+!! \frac{d \, \ce{H2O2}} {dt} &=& \zeta \, \ce{H2O2} + \phi \\
+!! \zeta &=& -k_0 -k_2 \ce{OH} \\
+!! \phi &=& k_1 \ce{HO2} \ce{HO2} \\
+!! \rightarrow \ce{H2O2} (t) &=& \left( \ce{H2O2}(0) + \frac{\phi} {\zeta}\right) e^{\zeta t} - \frac{\phi}{\zeta}
+!! \f}
+
+
 
 module trop_mam4_analytical
-
-!-------------------------------------------------------
-!  analytical solution of the following system
-!  k0  [jh2o2]       H2O2 + hv ->
-!  k1  [usr_HO2_HO2] HO2 + HO2 -> H2O2
-!  k2                H2O2 + OH -> H2O + HO2                                           ; 2.9e-12, -160
-!  k3  [usr_SO2_OH]  SO2 + OH -> H2SO4
-!  k4                DMS + OH -> SO2                                                  ; 9.6e-12, -234.
-!  k5  [usr_DMS_OH]  DMS + OH -> .5 * SO2 + .5 * HO2
-!  k6                DMS + NO3 -> SO2 + HNO3                                          ; 1.9e-13,  520.
-!
-!  Fixed (constant) values for HO2, OH, NO3
-!-------------------------------------------------------
 
    use chemical_state,            only : chemical_state_t
    use environment,               only : environment_t
